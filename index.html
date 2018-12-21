@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo04</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#container{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+		}
+		canvas{
+			position: absolute;
+			left: 0;
+			top: 50%;
+		}
+		#cav{
+		    position: absolute;
+		    top: 0%;
+		    width: 0;
+		    height: 0;
+		    opacity: 0;
+		    z-index: 10;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div class="loading_page">
+		</div>
+		<canvas id="cav"></canvas>
+	</div>
+
+	<script type="text/javascript">
+		var resourceType = 0; //0, 16比9资源；1，全面屏资源
+	    var detalY = 0; //全面屏Y坐标补偿值
+	    var setW = 750;
+	    var setH = 1218; //16:9高度
+	    var setH_X = 1448; //全面屏高度
+	    var setRatio = 750 / 1218;
+	    var setRatio_2 = 750 / setH_X;
+
+	    function InitCanvas() {
+	        var width = window.innerWidth;
+	        var height = window.innerHeight;
+	        var container = document.getElementById("container");
+	        var cav = document.getElementById("cav");
+
+	        var ratio = width / height
+
+	        if (setW / ratio < setH) { //窗口宽高比例， 窗口偏矮。 将高度铺满
+	            container.style.height = height + 'px';
+	            container.style.width = height * setRatio + 'px';
+	            container.style.marginTop = -(height / 2) + 'px';
+	            container.style.marginLeft = -(height * setRatio / 2) + 'px';
+	            document.documentElement.style.fontSize = height * setRatio / (750) * 100 + 'px';
+
+	        } else { //窗口宽高比例， 窗口偏高。 将宽度铺满
+	            container.style.width = width + 'px';
+	            container.style.height = width / setRatio_2 + 'px';
+	            container.style.marginTop = -(width / setRatio_2 / 2) + 'px';
+	            container.style.marginLeft = -(width / 2) + 'px';
+	            document.documentElement.style.fontSize = width / (750) * 100 + 'px';
+	            resourceType = 1; //全面屏资源
+	            document.body.setAttribute('class','hight_x')
+	        }
+	        detalY = (setH_X - setH) / 2; //全面屏资源Y坐标补偿值
+	    }
+	    InitCanvas();
+	</script>
+
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/PixiPlugin.min.js"></script>
+	<script type="text/javascript" src="./js/TweenMax.min.js"></script>
+	<script type="text/javascript" src="./js/pixi.min.js"></script>
+	<script type="text/javascript" src="./js/resource.js"></script>
+	<script type="text/javascript" src="./js/view.js"></script>
+	<script type="text/javascript" src="./js/index.js"></script>
+
+</body>
+</html>
